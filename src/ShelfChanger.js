@@ -10,9 +10,9 @@ class ShelfChanger extends Component{
     this.props.updateShelf(this.props.book, event.target.value);
 
 	render (){
-		//const {updateShelf,currentShelf} = this.props
+		const {currentShelf} = this.props
 		return(
-			<select onChange={this.updateShelf} defaultValue={this.currentShelf}>
+			<select onChange={this.updateShelf} defaultValue={currentShelf}>
 				<option value="move" disabled>Move to...</option>
 				<option value="currentlyReading">Currently Reading</option>
 				<option value="wantToRead">Want to Read</option>

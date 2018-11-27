@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Book from './Book'
+import { Link } from 'react-router-dom'
 class ListBookShelfs extends Component{
   static propTypes = {
     currently_reading: PropTypes.array.isRequired,
@@ -8,10 +9,14 @@ class ListBookShelfs extends Component{
     read: PropTypes.array.isRequired,
     updateShelf:PropTypes.func.isRequired
   }
+
+  redirectToSearch = () => {
+    this.props.history.push(`/search`)
+  }
+
   render (){
     const { currently_reading,want_to_read,read,updateShelf} = this.props
     //let showing_currently_reading, showing_want_to_read,showing_read
-    console.log(this.props)
     return(<div className="list-books">
       <div className="list-books-title">
         <h1>MyReads</h1>
@@ -51,7 +56,9 @@ class ListBookShelfs extends Component{
         </div>
       </div>
             <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+              <Link to={'/search'}>
+              <button>Add a book</button>
+              </Link>
             </div>
           </div>)
   }

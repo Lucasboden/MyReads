@@ -1,17 +1,62 @@
 import React, { Component } from 'react';
-class ListBookShelfs extends Component{
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import Book from './Book'
+import escapeRegExp from 'escape-string-regexp'
+class SearchBooks extends Component{
+  state={
+    query:'',
+    showingBooks:[]
+  }
+
+  static propTypes = {
+    updateShelf:PropTypes.func.isRequired,
+    searchBook:PropTypes.func.isRequired
+  }
+
+  updateQuery = event => {
+    const query = event.target.value
+    this.setState({ query: query.trim()})
+    if(query){
+      this.props.searchBook(query,20).then(books => {
+        if(books.length >0)
+          this.setState({showingBooks: books})
+        else
+          this.setState({showingBooks: []})
+      })
+    }
+  }
+
+  clearQuery = () => {
+    this.setState({ query: '' })
+  }
   render (){
-return (
-  <div className="search-books">
-    <div className="search-books-bar">
-      <button className="close-search">Close</button>
-      <div className="search-books-input-wrapper">
-        <input type="text" placeholder="Search by title or author"/>
+    const {updateShelf} = this.props
+    const {query,showingBooks} = this.state
+    return (
+      <div className="search-books">
+        <div className="search-books-bar">
+          <Link to='/'>
+            <button className="close-search">Close</button>
+          </Link>
+          <div className="search-books-input-wrapper">
+            <input 
+              type="text" 
+              placeholder="Search by title or author"
+              value={query}
+              onChange={this.updateQuery}
+            />
+          </div>
+        </div>
+        <div className="search-books-results">
+          <div className="bookshelf-books">
+              <ol className="books-grid">
+                {showingBooks.map((book) => (
+                  <Book book={book} key={book.id} updateShelf={updateShelf}/>
+                ))}
+              </ol>
+            </div>
+        </div>
       </div>
-    </div>
-    <div className="search-books-results">
-      <ol className="books-grid"></ol>
-    </div>
-  </div>
   )}}
-export default ListBookShelfs
+export default SearchBooks

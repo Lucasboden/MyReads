@@ -8,10 +8,10 @@ class BooksApp extends React.Component {
   state = {
     currently_reading:[],
     want_to_read:[],
-    read:[]
+    read:[],
+    all_books:[]
   }
-
-  componentDidMount() {
+  componentDidUpdate(){
     BooksAPI.getAll().then((book => {
       //this.setState({ currently_reading:book})
       this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading') })
@@ -19,7 +19,14 @@ class BooksApp extends React.Component {
       this.setState({ read:book.filter(book => book.shelf === 'read') })
     }))
   }
-
+  componentDidMount() {
+    BooksAPI.getAll().then((book => {
+      this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading') })
+      this.setState({ want_to_read:book.filter(book => book.shelf === 'wantToRead') })
+      this.setState({ read:book.filter(book => book.shelf === 'read') })
+      this.setState({all_books:book})
+    }))
+  }
   updateShelf = (updatedBook,shelf) =>{
     BooksAPI.update(updatedBook,shelf).then(response => {
       updatedBook.shelf = shelf;
@@ -58,8 +65,11 @@ class BooksApp extends React.Component {
           updateShelf={this.updateShelf}
           />  
         )}/>
-        <Route path='/create' render={({ history }) => (
+        <Route path='/search' render={({ history }) => (
           <SearchBooks
+            //all_books={this.state.all_books}
+            updateShelf={this.updateShelf}
+            searchBook={BooksAPI.search}
           />
         )}/>
       </div>
