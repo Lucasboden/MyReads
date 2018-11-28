@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
-import escapeRegExp from 'escape-string-regexp'
+
 class SearchBooks extends Component{
   state={
     query:'',
@@ -10,21 +10,25 @@ class SearchBooks extends Component{
   }
 
   static propTypes = {
+    all_books:PropTypes.array.isRequired,
     updateShelf:PropTypes.func.isRequired,
     searchBook:PropTypes.func.isRequired
   }
 
   updateQuery = event => {
     const query = event.target.value
-    this.setState({ query: query.trim()})
+    this.setState({ query: query})
     if(query){
-      this.props.searchBook(query,20).then(books => {
+      console.log(this.props.searchBook(query))
+      this.props.searchBook(query.trim()).then(books => {
         if(books.length >0)
           this.setState({showingBooks: books})
         else
           this.setState({showingBooks: []})
       })
     }
+    else
+      this.setState({showingBooks: []})
   }
 
   clearQuery = () => {

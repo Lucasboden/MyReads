@@ -6,8 +6,10 @@ class ShelfChanger extends Component{
 		updateShelf:PropTypes.func.isRequired,
 		currentShelf:PropTypes.string.isRequired
 	}
-	updateShelf = event =>
-    this.props.updateShelf(this.props.book, event.target.value);
+	updateShelf = event =>{
+    	this.props.updateShelf(this.props.book, event.target.value);
+	}
+
 
 	render (){
 		const {currentShelf} = this.props
