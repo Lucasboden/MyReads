@@ -1,7 +1,7 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route } from 'react-router-dom'
 import ListBookShelfs from './ListBookShelfs'
 import SearchBooks from './SearchBooks'
 class BooksApp extends React.Component {
@@ -11,21 +11,14 @@ class BooksApp extends React.Component {
     read:[],
     all_books:[]
   }
-  /*componentDidUpdate(){
-    BooksAPI.getAll().then((book => {
-      //this.setState({ currently_reading:book})
-      this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading') })
-      this.setState({ want_to_read:book.filter(book => book.shelf === 'wantToRead') })
-      this.setState({ read:book.filter(book => book.shelf === 'read') })
-      this.setState({all_books:book})
-    }))
-  }*/
+  
   componentDidMount() {
     BooksAPI.getAll().then((book => {
-      this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading') })
-      this.setState({ want_to_read:book.filter(book => book.shelf === 'wantToRead') })
-      this.setState({ read:book.filter(book => book.shelf === 'read') })
-      this.setState({all_books:book})
+      this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading'),
+                      want_to_read:book.filter(book => book.shelf === 'wantToRead'),
+                      read:book.filter(book => book.shelf === 'read'),
+                      all_books:book
+       })
     }))
   }
   updateShelf = (updatedBook,shelf) =>{

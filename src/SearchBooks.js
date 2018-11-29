@@ -19,7 +19,6 @@ class SearchBooks extends Component{
     const query = event.target.value
     this.setState({ query: query})
     if(query){
-      console.log(this.props.searchBook(query))
       this.props.searchBook(query.trim()).then(books => {
         if(books.length >0)
           this.setState({showingBooks: books})
