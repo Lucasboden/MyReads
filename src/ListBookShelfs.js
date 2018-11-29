@@ -2,20 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Book from './Book'
 import { Link } from 'react-router-dom'
-class ListBookShelfs extends Component{
-  static propTypes = {
-    currently_reading: PropTypes.array.isRequired,
-    want_to_read: PropTypes.array.isRequired,
-    read: PropTypes.array.isRequired,
-    updateShelf:PropTypes.func.isRequired
-  }
-
-  redirectToSearch = () => {
-    this.props.history.push(`/search`)
-  }
-
-  render (){
-    const { currently_reading,want_to_read,read,updateShelf} = this.props
+const ListBookShelfs = ({currently_reading,want_to_read,read,updateShelf}) => {
+  //const { currently_reading,want_to_read,read,updateShelf} = props
     //let showing_currently_reading, showing_want_to_read,showing_read
     return(<div className="list-books">
       <div className="list-books-title">
@@ -61,7 +49,12 @@ class ListBookShelfs extends Component{
               </Link>
             </div>
           </div>)
-  }
+};
+ListBookShelfs.propTypes = {
+  currently_reading: PropTypes.array.isRequired,
+  want_to_read: PropTypes.array.isRequired,
+  read: PropTypes.array.isRequired,
+  updateShelf:PropTypes.func.isRequired
 }
 
 export default ListBookShelfs

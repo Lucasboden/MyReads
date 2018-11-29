@@ -15,10 +15,11 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((book => {
       this.setState({ currently_reading:book.filter(book => book.shelf === 'currentlyReading'),
-                      want_to_read:book.filter(book => book.shelf === 'wantToRead'),
-                      read:book.filter(book => book.shelf === 'read'),
-                      all_books:book
-       })
+      want_to_read:book.filter(book => book.shelf === 'wantToRead'),
+      read:book.filter(book => book.shelf === 'read'),
+      all_books:book
+     })
+     
     }))
   }
   updateShelf = (updatedBook,shelf) =>{
@@ -28,9 +29,6 @@ class BooksApp extends React.Component {
       var cuRe= prevState.currently_reading.filter(book => book.id !== updatedBook.id);
       var waRe= prevState.want_to_read.filter(book => book.id !== updatedBook.id);
       var re= prevState.read.filter(book => book.id !== updatedBook.id);
-      /*if(updatedBook.shelf===shelf){
-        return {currently_reading:cuRe,want_to_read:waRe,read:re};
-      }*/
       switch(shelf){
         case 'currentlyReading':
           cuRe= prevState.currently_reading.concat(updatedBook)

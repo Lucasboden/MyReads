@@ -12,7 +12,8 @@ class SearchBooks extends Component{
   static propTypes = {
     all_books:PropTypes.array.isRequired,
     updateShelf:PropTypes.func.isRequired,
-    searchBook:PropTypes.func.isRequired
+    searchBook:PropTypes.func.isRequired,
+    checkBook:PropTypes.func.isRequired
   }
 
   updateQuery = event => {
@@ -55,7 +56,7 @@ class SearchBooks extends Component{
           <div className="bookshelf-books">
               <ol className="books-grid">
                 {showingBooks.map((book) => (
-                  <Book book={book} key={book.id} updateShelf={updateShelf}/>
+                  <Book book={book} key={book.id} updateShelf={updateShelf} checkBook={checkBook}/>
                 ))}
               </ol>
             </div>
