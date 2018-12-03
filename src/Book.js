@@ -6,10 +6,6 @@ class Book extends Component{
 		book: PropTypes.object.isRequired,
 		updateShelf:PropTypes.func.isRequired
 	}
-
-	checkShelf = (book) => {
-			
-	}
 	
 	render (){
 		const {book,updateShelf} = this.props
@@ -20,7 +16,7 @@ class Book extends Component{
 	        	<div className="book-top">
 	          	<div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})` }}></div>
 		          <div className="book-shelf-changer">
-		            <ShelfChanger book={book} updateShelf={updateShelf} currentShelf={this.checkShelf(book)}/>
+		          	<ShelfChanger book={book} updateShelf={updateShelf} currentShelf={book.shelf || 'none'}/>
 		          </div>
 		        </div>
 		        <div className="book-title">{book.title}</div>

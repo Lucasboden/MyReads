@@ -10,7 +10,6 @@ class SearchBooks extends Component{
   }
 
   static propTypes = {
-    all_books:PropTypes.array.isRequired,
     updateShelf:PropTypes.func.isRequired,
     searchBook:PropTypes.func.isRequired,
     checkBook:PropTypes.func.isRequired
@@ -21,8 +20,12 @@ class SearchBooks extends Component{
     this.setState({ query: query})
     if(query){
       this.props.searchBook(query.trim()).then(books => {
-        if(books.length >0)
+        if(books.length >0){
+          books.map((book) => (
+            this.props.checkBook(book)
+          ))
           this.setState({showingBooks: books})
+        }
         else
           this.setState({showingBooks: []})
       })
@@ -34,8 +37,9 @@ class SearchBooks extends Component{
   clearQuery = () => {
     this.setState({ query: '' })
   }
+
   render (){
-    const {updateShelf} = this.props
+    const {updateShelf,searchBook,checkBook} = this.props
     const {query,showingBooks} = this.state
     return (
       <div className="search-books">

@@ -1,9 +1,11 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route,
+Switch} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBookShelfs from './ListBookShelfs'
 import SearchBooks from './SearchBooks'
+import NoMatch from './NoMatch'
 class BooksApp extends React.Component {
   state = {
     currently_reading:[],
@@ -19,9 +21,27 @@ class BooksApp extends React.Component {
       read:book.filter(book => book.shelf === 'read'),
       all_books:book
      })
-     
     }))
   }
+
+  checkBook = (book) => {
+    this.state.want_to_read.map((stBook) => {
+      if(stBook.id === book.id){
+        book.shelf = stBook.shelf
+      }
+    })
+    this.state.currently_reading.map((stBook) => {
+      if(stBook.id === book.id){
+        book.shelf = stBook.shelf
+      }
+    })
+    this.state.read.map((stBook) => {
+      if(stBook.id === book.id){
+        book.shelf = stBook.shelf
+      }
+    })
+  }
+
   updateShelf = (updatedBook,shelf) =>{
     BooksAPI.update(updatedBook,shelf)
     updatedBook.shelf = shelf;
@@ -48,6 +68,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div>
+      <Switch>
         <Route exact path='/' render={() => (
           <ListBookShelfs
           currently_reading={this.state.currently_reading}
@@ -58,11 +79,13 @@ class BooksApp extends React.Component {
         )}/>
         <Route path='/search' render={({ history }) => (
           <SearchBooks
-            all_books={this.state.all_books}
             updateShelf={this.updateShelf}
             searchBook={BooksAPI.search}
+            checkBook={this.checkBook}
           />
         )}/>
+        <Route component={NoMatch}/>
+      </Switch>
       </div>
     )
   }
